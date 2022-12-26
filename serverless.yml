@@ -11,19 +11,19 @@ provider:
   memorySize: 128
   environment:
     DYNAMODB_TABLE: ${self:custom.dynamotable}
-    REGION_NAME: ${self:custom.region}
+    REGION_NAME: ${self:provider.region}
   iam:
     role:
       statements:
-        - Effect: 'Allow'
-          Resources: 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}'
+        - Effect: Allow
           Action:
-            - dynamodb: Query
-            - dynamodb: Scan
-            - dynamodb: GetItem
-            - dynamodb: PutItem
-            - dynamodb: UpdateItem
-            - dynamodb: DeleteItem
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
 functions:
   create: 
     handler: handler.create
@@ -73,7 +73,7 @@ resources:
         TableName: ${self:provider.environment.DYNAMODB_TABLE}
 
 plugins:
-  - serverless-puthon-requirements
+  - serverless-python-requirements
 custom:
   dynamotable: the-posts
   pythonRequirements:

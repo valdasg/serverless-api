@@ -19,7 +19,7 @@ def create(event, context):
     post['createdAt'] = current_timestamp
     post['id'] = str(uuid.uuid4())
 
-    res = dynamo.put_item(
+    res = dynamodb.put_item(
         TableName = table_name,
         Item = dynamo.to_item(post)
     )
